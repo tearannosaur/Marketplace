@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:18
+    container_name: marketplace
+    restart: always
+    environment: 
+      POSTGRES_PASSWORD: ${DB_PASSWORD} 
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    volumes: 
+      - /var/lib/postgresql/data
+    ports: 
+      - "5432:5432"
+volumes:
+  db-data:
+
+    
+
+  
