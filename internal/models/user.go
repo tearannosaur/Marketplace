@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"log"
+	er "mp/internal/errors"
 	"mp/internal/utils"
 
 	"github.com/google/uuid"
@@ -31,12 +32,12 @@ type UserRequest struct {
 func CreateUser(u UserRequest) (User, error) {
 	password, err := utils.HashPassword(u.Password)
 	if err != nil {
-		log.Println("Ошибка генерации хэша", err)
+		log.Println(er.HashGenerateErr, err)
 		return User{}, err
 	}
 	if u.Password == "" || u.Login == "" {
-		log.Println("Неккоректные данные пользователя", u.Login)
-		err = errors.New("неккоректные данные пользователя")
+		log.Println(er.IncorrectUserDataErr, u.Login)
+		err = errors.New(er.IncorrectUserDataErr)
 		return User{}, err
 	}
 	return User{
@@ -52,7 +53,7 @@ func CreateUser(u UserRequest) (User, error) {
 // Возвращает ошибку, если на счёте недостаточно средств.
 func (u *User) Withdraw(amount float64) error {
 	if u.Balance-amount < 0 {
-		return errors.New("недостаточно средств на счету")
+		return errors.New(er.InsufficientFundsErr)
 	}
 	u.Balance -= amount
 	return nil
@@ -62,7 +63,7 @@ func (u *User) Withdraw(amount float64) error {
 // Возвращает ошибку, если сумма некорректна.
 func (u *User) Deposit(amount float64) error {
 	if amount <= 0 {
-		return errors.New("сумма должна быть положительной")
+		return errors.New(er.InvalidDepositAmountErr)
 	}
 	u.Balance += amount
 	return nil

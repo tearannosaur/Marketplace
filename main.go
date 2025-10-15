@@ -3,25 +3,26 @@ package main
 import (
 	"log"
 	db "mp/internal/database"
+	er "mp/internal/errors"
+	r "mp/internal/repository"
 	"mp/internal/server"
-
-	"os"
-
-	"github.com/joho/godotenv"
 )
 
 func main() {
-	err := godotenv.Load()
+
+	database, err := db.DBInit()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatalln(er.DataBaseConnectionErr, err)
 	}
-	user := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASSWORD")
-	name := os.Getenv("DB_NAME")
-	db, err := db.DBInit(user, name, password)
+	log.Println("Successfully database connection")
+
+	mg, err := db.Migration()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer db.DBClose()
+	repo := r.RepositoryModuleInit(database)
+	_ = repo
+	defer mg.MigrationClose()
+	defer database.DBClose()
 	server.ServerInit()
 }
