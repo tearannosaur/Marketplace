@@ -1,12 +1,19 @@
 package utils
 
 import (
+	"errors"
+
+	er "mp/internal/errors"
+
 	b "golang.org/x/crypto/bcrypt"
 )
 
 // HashPassword генерирует хэш из пароля.
 // Возвращает хэш и ошибку, если генерация не удалась.
 func HashPassword(password string) (string, error) {
+	if password == "" {
+		return password, errors.New(er.EmptyPasswordError)
+	}
 	p := []byte(password)
 	hash, err := b.GenerateFromPassword(p, b.DefaultCost)
 	if err != nil {

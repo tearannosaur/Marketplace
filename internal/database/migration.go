@@ -6,8 +6,10 @@ import (
 	er "mp/internal/errors"
 	"os"
 
-	"github.com/golang-migrate/migrate"
-	_ "github.com/golang-migrate/migrate/source/file"
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+	_ "github.com/golang-migrate/migrate/v4/source/github"
 )
 
 type MigrationModule struct {
@@ -25,11 +27,14 @@ func Migration() (*MigrationModule, error) {
 		return nil, err
 	}
 	err = m.Up()
+	if err == migrate.ErrNoChange {
+		log.Println("Migrations no change")
+	}
 	if err != nil && err != migrate.ErrNoChange {
 		log.Println(er.MigrationUpErr)
 		return nil, err
 	}
-	log.Println("Successfully migrations applied ")
+	log.Println("Successfully migrations applied")
 	return &MigrationModule{mg: m}, nil
 }
 

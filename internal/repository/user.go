@@ -1,5 +1,5 @@
 package repository
 
-func (r *RepositoryModule) NewUser() {
+func (r *RepositoryModule) CreateUser() {
 
 }

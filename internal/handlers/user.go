@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewUser(c *gin.Context) {
+func (h *HandlerModule) NewUser(c *gin.Context) {
 	var user m.UserRequest
 	err := c.BindJSON(&user)
 	if err != nil {
@@ -27,6 +27,7 @@ func NewUser(c *gin.Context) {
 		})
 		return
 	}
+	//сохранить в бд
 	UserResponse := m.UserResponse{
 		User_id: newUser.User_id,
 		Login:   newUser.Login,
@@ -35,4 +36,5 @@ func NewUser(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{
 		"success": UserResponse,
 	})
+
 }

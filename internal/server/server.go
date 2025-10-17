@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ServerInit() {
+func ServerInit(h *h.HandlerModule) {
 	r := gin.Default()
 	r.POST("/user", h.NewUser)
 	if err := r.Run(); err != nil {
