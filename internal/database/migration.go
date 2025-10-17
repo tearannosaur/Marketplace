@@ -64,5 +64,6 @@ func (m *MigrationModule) DatabaseDown() error {
 		log.Println(er.MigrationDownErr)
 		return err
 	}
+	log.Println("Succesfully migration down")
 	return nil
 }

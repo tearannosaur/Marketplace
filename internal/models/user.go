@@ -10,16 +10,16 @@ import (
 )
 
 type User struct {
-	User_id  uuid.UUID `json:"user_id"`
-	Login    string    `json:"user_login"`
-	Password string    `json:"user_password"`
-	Role     string    `json:"user_role"`
-	Balance  float64   `json:"user_balance"`
+	UserId   uuid.UUID `json:"user_id" db:"user_id"`
+	Login    string    `json:"user_login" db:"user_login"`
+	Password string    `json:"user_password" db:"user_password"`
+	Role     string    `json:"user_role" db:"user_role"`
+	Balance  float64   `json:"user_balance" db:"user_balance"`
 }
 
 type UserResponse struct {
-	User_id uuid.UUID `json:"user_id"`
-	Login   string    `json:"user_login"`
+	UserId uuid.UUID `json:"user_id"`
+	Login  string    `json:"user_login"`
 }
 
 type UserRequest struct {
@@ -41,7 +41,7 @@ func CreateUser(u UserRequest) (User, error) {
 		return User{}, err
 	}
 	return User{
-		User_id:  uuid.New(),
+		UserId:   uuid.New(),
 		Login:    u.Login,
 		Password: password,
 		Role:     "user",

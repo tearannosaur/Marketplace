@@ -13,7 +13,7 @@ import (
 )
 
 type DBModule struct {
-	db *sqlx.DB
+	Db *sqlx.DB
 }
 
 func DBInit() (*DBModule, error) {
@@ -32,11 +32,11 @@ func DBInit() (*DBModule, error) {
 		log.Println(er.DataBaseConnectionErr)
 		return nil, err
 	}
-	return &DBModule{db: database}, nil
+	return &DBModule{Db: database}, nil
 }
 
 func (d *DBModule) DBClose() error {
-	err := d.db.Close()
+	err := d.Db.Close()
 	if err != nil {
 		log.Println(er.DataBaseCloseErr)
 		return err

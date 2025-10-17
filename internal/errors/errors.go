@@ -17,4 +17,5 @@ const (
 	MigrationDownErr        = "Migration down error"
 	MigrationCloserErr      = "migration close error"
 	EmptyPasswordError      = "empty password error"
+	UserSelectError         = "User select error"
 )

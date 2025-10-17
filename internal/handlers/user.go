@@ -29,10 +29,10 @@ func (h *HandlerModule) NewUser(c *gin.Context) {
 	}
 	//сохранить в бд
 	UserResponse := m.UserResponse{
-		User_id: newUser.User_id,
-		Login:   newUser.Login,
+		UserId: newUser.UserId,
+		Login:  newUser.Login,
 	}
-	log.Println("User successfully created\nLogin:", newUser.Login, "\nId:", newUser.User_id)
+	log.Println("User successfully created\nLogin:", newUser.Login, "\nId:", newUser.UserId)
 	c.JSON(http.StatusCreated, gin.H{
 		"success": UserResponse,
 	})
