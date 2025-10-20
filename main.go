@@ -22,6 +22,10 @@ func main() {
 		log.Fatalln(err)
 	}
 	repo := r.RepositoryModuleInit(database)
+	err = r.AdminInit(repo)
+	if err != nil {
+		log.Println(err)
+	}
 	handler := h.HandlerModuleInit(repo)
 	_ = repo
 	defer mg.MigrationClose()

@@ -31,7 +31,6 @@ type UserRequest struct {
 // Возвращает ошибку, если не удалось сгенерировать хэш пароля.
 func CheckUserData(u UserRequest) error {
 	if u.Password == "" || u.Login == "" {
-		log.Println(er.IncorrectUserDataErr, u.Login)
 		err := errors.New(er.IncorrectUserDataErr)
 		return err
 	}
@@ -44,7 +43,7 @@ func CreateUser(u UserRequest) (User, error) {
 	}
 	password, err := utils.HashPassword(u.Password)
 	if err != nil {
-		log.Println(er.HashGenerateErr, err)
+		log.Println(er.HashGenerateErr)
 		return User{}, err
 	}
 

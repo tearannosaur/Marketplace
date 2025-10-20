@@ -20,4 +20,5 @@ const (
 	UserSelectError         = "User select error"
 	UserAlreadyExistErr     = "user already exist"
 	SaveUserDBErr           = "Database save user error"
+	AdminAlreadyExist       = "superadmin already exist"
 )

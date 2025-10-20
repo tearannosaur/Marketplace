@@ -12,11 +12,10 @@ func (r *RepositoryModule) UserExist(user m.User) error {
 	query := `SELECT EXISTS(SELECT 1 FROM users WHERE user_login=$1)`
 	err := r.database.Db.Get(&exist, query, user.Login)
 	if err != nil {
-		log.Println(er.UserSelectError, err)
+		log.Println(er.UserSelectError)
 		return err
 	}
 	if exist {
-		log.Println("User already exist")
 		err = errors.New(er.UserAlreadyExistErr)
 		return err
 	}
@@ -32,7 +31,7 @@ func (r *RepositoryModule) SaveUser(user m.User) error {
 	VALUES($1,$2,$3,$4,$5)`
 	_, err = r.database.Db.Exec(query, user.UserId, user.Login, user.Password, user.Role, user.Balance)
 	if err != nil {
-		log.Println("User insert error:", err)
+		log.Println("User insert error:")
 		return err
 	}
 	return nil
