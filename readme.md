@@ -3,10 +3,10 @@
 Backend: Golang/gin/jwt
 Frontend: html/css
 Database: PostgreSQL
-Контейнеризация: Docker-compose
+Контейнеризация: Docker,Docker-compose
 ---------------
 # Структура проекта
-Пользователь взаимодействует с web интерфейсом на html/css, с помощью http протокала отправляет запросы на сервер
+Пользователь взаимодействует с web интерфейсом на html/css, с помощью http протокола отправляет запросы на сервер
 На сервере backend на go обрабаывает запрос и в зависимости от запроса взаимодействует с БД на PostgreSQL
 
 --------------
@@ -23,13 +23,13 @@ Database: PostgreSQL
 3) Авторизация по роли admin/user
 --------------
 # Сущности
-1) User(user_id,login,password,role,balance)
-2) Wishlist(user_id, product_id)
-3) Bucket(user_id,product_id,quatity)
-3) Product(id,price,category,description)
-4) Category(name,description)
-5) Order(order_id,user_id,total_price,status,created_at,updated_at)
-6) order_items(order_id,product_id,price,quantity)
+1) User(user_id,user_login,user_password,user_role,user_balance)
+2) Wishlist(wishlist_user_id wishlist_product_id)
+3) Bucket(bucket_user_id,bucket_product_id,bucket_quantity,bucket_amount)
+3) Product(product_id,product_price,product_category_id,product_description)
+4) Category(category_id,category_name,category_description)
+5) Orders(order_id,order_user_id,order_amount,order_status,order_created,order_updated)
+6) order_items(order_items_id,order_items_product_id,order_items_price,order_items_quantity)
 
 ----------------
 # Методы и функции
@@ -38,10 +38,16 @@ Database: PostgreSQL
 1) CreateUser создаёт нового пользователя из данных запроса. Возвращает ошибку, если не удалось сгенерировать хэш пароля.
 2) Withdraw — снимает деньги с баланса пользователя. Возвращает ошибку, если на счёте недостаточно средств.
 3) Deposit — пополняет баланс пользователя на указанную сумму. Возвращает ошибку, если сумма некорректна.
-
+4) UserExist-проверка существует ли пользователь в базе данных.
+5) CheckUserData-проверка запроса создания пользователя на корректность данных.
+6) SaveUser-сохранение пользователя в базу данных.
+7) NewUser-обработчик POST запроса на создание пользователя по эндпоинту /user
 ----------------
 ## Utils
 1) HashPassword генерирует хэш из пароля. Возвращает хэш и ошибку, если генерация не удалась.
 2) VerifyPassword проверяет, соответствует ли пароль хэшу.
-
+----------------
 # API Эндпоинты
+1) POST /user-создание нового пользователя
+Принимает:login,password
+Возвращает:id,login

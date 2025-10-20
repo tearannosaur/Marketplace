@@ -29,17 +29,25 @@ type UserRequest struct {
 
 // CreateUser создаёт нового пользователя из данных запроса.
 // Возвращает ошибку, если не удалось сгенерировать хэш пароля.
+func CheckUserData(u UserRequest) error {
+	if u.Password == "" || u.Login == "" {
+		log.Println(er.IncorrectUserDataErr, u.Login)
+		err := errors.New(er.IncorrectUserDataErr)
+		return err
+	}
+	return nil
+}
 func CreateUser(u UserRequest) (User, error) {
+	err := CheckUserData(u)
+	if err != nil {
+		return User{}, err
+	}
 	password, err := utils.HashPassword(u.Password)
 	if err != nil {
 		log.Println(er.HashGenerateErr, err)
 		return User{}, err
 	}
-	if u.Password == "" || u.Login == "" {
-		log.Println(er.IncorrectUserDataErr, u.Login)
-		err = errors.New(er.IncorrectUserDataErr)
-		return User{}, err
-	}
+
 	return User{
 		UserId:   uuid.New(),
 		Login:    u.Login,

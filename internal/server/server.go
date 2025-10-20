@@ -16,5 +16,4 @@ func ServerInit(h *h.HandlerModule) {
 		log.Println(er.ServerInitErr, err)
 		return
 	}
-
 }

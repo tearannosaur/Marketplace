@@ -19,6 +19,14 @@ func (h *HandlerModule) NewUser(c *gin.Context) {
 		})
 		return
 	}
+	err = m.CheckUserData(user)
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
 	newUser, err := m.CreateUser(user)
 	if err != nil {
 		log.Println(er.UserCreateErr, err)
@@ -27,7 +35,22 @@ func (h *HandlerModule) NewUser(c *gin.Context) {
 		})
 		return
 	}
-	//сохранить в бд
+	err = h.repo.UserExist(newUser)
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	err = h.repo.SaveUser(newUser)
+	if err != nil {
+		log.Println(er.SaveUserDBErr, err)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": er.SaveUserDBErr,
+		})
+		return
+	}
 	UserResponse := m.UserResponse{
 		UserId: newUser.UserId,
 		Login:  newUser.Login,

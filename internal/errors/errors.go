@@ -18,4 +18,6 @@ const (
 	MigrationCloserErr      = "migration close error"
 	EmptyPasswordError      = "empty password error"
 	UserSelectError         = "User select error"
+	UserAlreadyExistErr     = "user already exist"
+	SaveUserDBErr           = "Database save user error"
 )
