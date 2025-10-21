@@ -29,7 +29,7 @@ type UserRequest struct {
 
 // CreateUser создаёт нового пользователя из данных запроса.
 // Возвращает ошибку, если не удалось сгенерировать хэш пароля.
-func CheckUserData(u UserRequest) error {
+func ValidateUserData(u UserRequest) error {
 	if u.Password == "" || u.Login == "" {
 		err := errors.New(er.IncorrectUserDataErr)
 		return err
@@ -37,7 +37,7 @@ func CheckUserData(u UserRequest) error {
 	return nil
 }
 func CreateUser(u UserRequest) (User, error) {
-	err := CheckUserData(u)
+	err := ValidateUserData(u)
 	if err != nil {
 		return User{}, err
 	}
