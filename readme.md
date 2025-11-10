@@ -1,7 +1,6 @@
 
 # Стек проекта
 Backend: Golang/gin/jwt
-Frontend: html/css
 Database: PostgreSQL
 Контейнеризация: Docker,Docker-compose
 # Описание проекта
