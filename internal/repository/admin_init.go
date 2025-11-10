@@ -30,7 +30,7 @@ func AdminInit(r *RepositoryModule) error {
 		return err
 	}
 	if exist {
-		return errors.New(er.AdminAlreadyExist)
+		return errors.New(er.AdminAlreadyExistErr)
 	}
 	err = r.SaveUser(superAdmin)
 	if err != nil {

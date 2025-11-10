@@ -38,14 +38,14 @@ func NewProduct(p ProductResponce) (Product, error) {
 
 func ValidateProductData(p ProductResponce) error {
 	if p.CategoryName == "" || p.Price <= 0 {
-		return errors.New(er.IncorrectProductData)
+		return errors.New(er.IncorrectProductDataErr)
 	}
 	return nil
 }
 
 func (p *Product) ProductChangePrice(amount float64) error {
 	if amount < 0 {
-		return errors.New(er.IncorrectProductPrice)
+		return errors.New(er.IncorrectProductPriceErr)
 	}
 	p.Price = amount
 	return nil
@@ -53,7 +53,7 @@ func (p *Product) ProductChangePrice(amount float64) error {
 
 func (p *Product) ProductChangeName(newName string) error {
 	if newName == "" {
-		return errors.New(er.IncorrectProductData)
+		return errors.New(er.IncorrectProductDataErr)
 	}
 	p.ProductName = newName
 	return nil
@@ -61,7 +61,7 @@ func (p *Product) ProductChangeName(newName string) error {
 
 func (p *Product) ProductChangeCategory(newCategory string) error {
 	if newCategory == "" {
-		return errors.New(er.IncorrectProductData)
+		return errors.New(er.IncorrectProductDataErr)
 	}
 	p.CategoryName = newCategory
 	return nil

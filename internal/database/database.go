@@ -25,7 +25,6 @@ func DBInit() (*DBModule, error) {
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
 	name := os.Getenv("DB_NAME")
-	fmt.Println("user,password,name")
 	connection := fmt.Sprintf("user=%s password=%s dbname=%s  host=localhost port=5432 sslmode=disable", user, password, name)
 	database, err := sqlx.Connect("postgres", connection)
 	if err != nil {

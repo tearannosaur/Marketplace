@@ -6,6 +6,7 @@ import (
 	er "mp/internal/errors"
 	"mp/internal/utils"
 
+	
 	"github.com/google/uuid"
 )
 
@@ -27,15 +28,18 @@ type UserRequest struct {
 	Password string `json:"user_password"`
 }
 
-// CreateUser создаёт нового пользователя из данных запроса.
-// Возвращает ошибку, если не удалось сгенерировать хэш пароля.
+// ValidateUserData проверяет данные Json запроса.
+// Возвращает ошибку если данные не корректны.
 func ValidateUserData(u UserRequest) error {
 	if u.Password == "" || u.Login == "" {
-		err := errors.New(er.IncorrectUserDataErr)
+		err := errors.New(er.IncorrectJsonBody)
 		return err
 	}
 	return nil
 }
+
+// CreateUser создаёт нового пользователя из данных запроса.
+// Возвращает ошибку, если не удалось сгенерировать хэш пароля.
 func CreateUser(u UserRequest) (User, error) {
 	err := ValidateUserData(u)
 	if err != nil {
